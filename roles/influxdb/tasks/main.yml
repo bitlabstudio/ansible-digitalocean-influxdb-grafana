@@ -1,0 +1,40 @@
+---
+- name: influxdb - create folders
+  shell: mkdir -p ~/src
+
+- name: influxdb - check if sources have been downloaded
+  stat: path=~/src/influxdb_latest_amd64.deb
+  register: influxdb_download
+
+- name: influxdb - download sources
+  shell: wget http://s3.amazonaws.com/influxdb/influxdb_latest_amd64.deb
+  when: not influxdb_download.stat.exists
+  args:
+    chdir: ~/src
+
+- name: influxdb - install
+  shell: dpkg -i ~/src/influxdb_latest_amd64.deb
+
+- name: influxdb - start service
+  service: name=influxdb state=started
+
+- name: influxdb - wait for service
+  wait_for: port=8086 delay=5
+
+- name: influxdb - deploy shards_default.json
+  template: src=shards_default.json dest=~/src/
+
+- name: influxdb - create project database
+  shell: curl -X POST "http://localhost:8086/cluster/database_configs/{{ INFLUXDB_DATABASE }}?u=root&p=root" --data-binary @/root/src/shards_default.json
+
+- name: influxdb - create grafana database
+  shell: "curl -X POST 'http://localhost:8086/cluster/database_configs/grafana?u=root&p=root' -d '{\"name\": \"grafana\"}'"
+
+- name: influxdb - create project user
+  shell: "curl -X POST 'http://localhost:8086/db/{{ INFLUXDB_DATABASE }}/users?u=root&p=root' -d '{\"name\": \"{{ INFLUXDB_USER }}\", \"password\": \"{{ INFLUXDB_PASSWORD }}\"}'"
+
+- name: influxdb - create grafana user
+  shell: "curl -X POST 'http://localhost:8086/db/grafana/users?u=root&p=root' -d '{\"name\": \"grafana\", \"password\": \"{{ INFLUXDB_GRAFANA_PASSWORD }}\"}'"
+
+- name: influxdb - change root pw
+  shell: "curl -X POST 'http://localhost:8086/cluster_admins/root?u=root&p=root' -d '{\"password\": \"{{ INFLUXDB_ROOT_PASSWORD }}\"}'"

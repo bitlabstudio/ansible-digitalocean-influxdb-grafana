@@ -1,0 +1,28 @@
+{
+  "spaces": [
+    {
+      "name": "default",
+      "retentionPolicy": "7d",
+      "shardDuration": "7d",
+      "regex": "/.?default.*/",
+      "replicationFactor": 1,
+      "split": 1
+    },
+    {
+      "name": "downsampled_to_1h",
+      "retentionPolicy": "360d",
+      "shardDuration": "180d",
+      "regex": "/.?1h.*/",
+      "replicationFactor": 1,
+      "split": 1
+    },
+    {
+      "name": "downsampled_to_1d",
+      "retentionPolicy": "inf",
+      "shardDuration": "180d",
+      "regex": "/.?1d.*/",
+      "replicationFactor": 1,
+      "split": 1
+    }
+  ]
+}

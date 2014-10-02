@@ -1,0 +1,28 @@
+---
+- name: grafana - create folders
+  shell: mkdir -p /var/www/
+
+- name: grafana - check if sources have been downloaded
+  stat: path=~/src/{{ GRAFANA_SOURCE_FILENAME }}.tar.gz
+  register: grafana_download
+
+- name: grafana - download sources
+  shell: wget http://grafanarel.s3.amazonaws.com/{{ GRAFANA_SOURCE_FILENAME }}.tar.gz
+  when: not grafana_download.stat.exists
+  args:
+    chdir: ~/src
+
+- name: grafana - extract archive
+  shell: tar -xvf {{ GRAFANA_SOURCE_FILENAME }}.tar.gz
+  when: not grafana_download.stat.exists
+  args:
+    chdir: ~/src
+
+- name: grafana - copy source
+  shell: cp -rf ~/src/{{ GRAFANA_SOURCE_FILENAME }} /var/www/grafana
+
+- name: grafana - chown
+  shell: chown -R www-data:www-data /var/www/grafana
+
+- name: grafana - copy config
+  template: src=config.js dest=/var/www/grafana/

@@ -8,5 +8,5 @@
 
   roles:
     - influxdb
-    # - grafana
+    - grafana
     # - nginx

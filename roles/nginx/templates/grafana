@@ -1,0 +1,19 @@
+server {
+    listen 80;
+	server_name {{ inventory_hostname }};
+
+	auth_basic "Restricted";
+	auth_basic_user_file /etc/nginx/.htpasswd;
+
+	root html;
+	index index.html index.htm;
+
+	location / {
+		root /var/www/grafana;
+		index index.html;
+		add_header 'Access-Control-Allow-Origin' '*';
+		add_header 'Access-Control-Allow-Methods' 'GET, POST';
+		add_header 'Access-Control-Allow-Headers' 'Authorization, Content-Type';
+		add_header 'Access-Control-Allow-Credentials' 'true';
+	}
+}

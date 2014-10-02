@@ -21,13 +21,13 @@ function (Settings) {
     datasources: {
       {{ INFLUXDB_DATABASE }}: {
         type: 'influxdb',
-        url: "http://localhost:8086/db/{{ INFLUXDB_DATABASE }}",
+        url: "http://{{ inventory_hostname }}:8086/db/{{ INFLUXDB_DATABASE }}",
         username: '{{ INFLUXDB_USER }}',
         password: '{{ INFLUXDB_PASSWORD }}',
       },
       grafana: {
         type: 'influxdb',
-        url: "http://localhost:8086/db/grafana",
+        url: "http://{{ inventory_hostname }}:8086/db/grafana",
         username: 'grafana',
         password: '{{ INFLUXDB_GRAFANA_PASSWORD }}',
         grafanaDB: true

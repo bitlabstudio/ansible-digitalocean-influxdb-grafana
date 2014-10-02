@@ -1,0 +1,15 @@
+---
+- name: nginx - install nginx
+  apt: name=nginx update_cache=yes cache_valid_time=3600
+
+- name: nginx - install apache2-utils
+  apt: name=apache2-utils
+
+- name: nginx - htpasswd
+  htpasswd: path=/etc/nginx/.htpasswd name=grafana password={{ HTPASSWD_GRAFANA_PASSWORD }} owner=root group=www-data mode=0640
+
+- name: nginx - copy site
+  template: src=grafana dest=/etc/nginx/sites-enabled/
+
+- name: nginx - restart
+  service: name=nginx state=restarted

@@ -9,4 +9,4 @@
   roles:
     - influxdb
     - grafana
-    # - nginx
+    - nginx

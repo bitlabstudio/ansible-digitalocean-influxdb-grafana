@@ -51,3 +51,9 @@ ansible-playbook -i hosts site.yml
 ```
 
 Wasn't that easy? ;)
+
+You can now visit ``http://<droplet-ip>:8083`` and see your InfluxDB admin.
+You will see that we have two databases, one for saving grafana dashboards and
+another for your project's metrics.
+
+You can also visit ``http://<droplet-ip>`` to see your grafana dashboard.

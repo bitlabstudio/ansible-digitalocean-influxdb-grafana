@@ -2,6 +2,9 @@
 - name: nginx - install nginx
   apt: name=nginx update_cache=yes cache_valid_time=3600
 
+- name: nginx - install python-passlib
+  apt: name=python-passlib
+
 - name: nginx - install apache2-utils
   apt: name=apache2-utils
 

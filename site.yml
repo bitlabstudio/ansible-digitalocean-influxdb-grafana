@@ -10,3 +10,4 @@
     - influxdb
     - grafana
     - nginx
+    - python-server-metrics

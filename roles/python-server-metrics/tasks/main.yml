@@ -1,0 +1,18 @@
+---
+- name: server-metrics - install python-dev
+  apt: name=python-dev update_cache=yes cache_valid_time=3600
+
+- name: server-metrics - install pip
+  apt: name=python-pip
+
+- name: server-metrics - update pip
+  pip: name=pip extra_args="--upgrade"
+
+- name: server-metrics - install git
+  apt: name=git-core
+
+- name: server-metrics - clone repo
+  git: repo=https://github.com/bitmazk/python-server-metrics-scripts dest=/opt/python-server-metrics-scripts
+
+- name: server-metrics - install requirements
+  pip: requirements=/opt/python-server-metrics-scripts/requirements.txt

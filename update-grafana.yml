@@ -1,0 +1,10 @@
+---
+- name: main task
+  hosts: servers
+  vars_files:
+    - vars/external_vars.yml
+  user: "root"
+  sudo: yes
+
+  roles:
+    - update-grafana

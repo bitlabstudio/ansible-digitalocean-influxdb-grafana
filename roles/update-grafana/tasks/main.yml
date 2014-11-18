@@ -1,0 +1,31 @@
+---
+- name: grafana-update - check if sources have been downloaded
+  stat: path=~/src/{{ GRAFANA_SOURCE_FILENAME }}.tar.gz
+  register: grafana_download
+
+- name: grafana-update - download sources
+  shell: wget http://grafanarel.s3.amazonaws.com/{{ GRAFANA_SOURCE_FILENAME }}.tar.gz
+  when: not grafana_download.stat.exists
+  args:
+    chdir: ~/src
+
+- name: grafana-update - extract archive
+  shell: tar -xvf {{ GRAFANA_SOURCE_FILENAME }}.tar.gz
+  when: not grafana_download.stat.exists
+  args:
+    chdir: ~/src
+
+- name: grafana-update - backup config
+  shell: cp /var/www/grafana/config.js /var/www/config.js
+
+- name: grafana-update - delete old sources
+  shell: rm -rf /var/www/grafana
+
+- name: grafana-update - copy new sources
+  shell: cp -rf ~/src/{{ GRAFANA_SOURCE_FILENAME }} /var/www/grafana
+
+- name: grafana-update - move config
+  shell: mv /var/www/config.js /var/www/grafana
+
+- name: grafana-update - chown
+  shell: chown -R www-data:www-data /var/www/grafana

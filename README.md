@@ -83,3 +83,12 @@ You will see that we have two databases, one for saving grafana dashboards and
 another for your project's metrics.
 
 You can also visit ``http://<droplet-ip>`` to see your grafana dashboard.
+
+## Update Grafana
+
+When a new version of Grafana is released, just change the
+``GRAFANA_SOURCE_FILENAME`` in ``external_vars.yml`` and run:
+
+```
+ansible-playvook -i hosts update-grafana.yml
+```

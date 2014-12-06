@@ -22,10 +22,10 @@
   wait_for: port=8086 delay=5
 
 - name: influxdb - deploy shards_default.json
-  template: src=shards_default.json dest=~/src/
+  template: src=shards_default.json dest=/tmp/
 
 - name: influxdb - create project database
-  shell: curl -X POST "http://localhost:8086/cluster/database_configs/{{ INFLUXDB_DATABASE }}?u=root&p=root" --data-binary @/root/src/shards_default.json
+  shell: curl -X POST "http://localhost:8086/cluster/database_configs/{{ INFLUXDB_DATABASE }}?u=root&p=root" --data-binary @/tmp/shards_default.json
 
 - name: influxdb - create grafana database
   shell: "curl -X POST 'http://localhost:8086/cluster/database_configs/grafana?u=root&p=root' -d '{\"name\": \"grafana\"}'"

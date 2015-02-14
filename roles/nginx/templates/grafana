@@ -5,7 +5,6 @@ server {
 	auth_basic "Restricted";
 	auth_basic_user_file /etc/nginx/.htpasswd;
 
-	root html;
 	index index.html index.htm;
 
 	location / {

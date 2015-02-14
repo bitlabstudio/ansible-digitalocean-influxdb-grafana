@@ -14,5 +14,8 @@
 - name: nginx - copy site
   template: src=grafana dest=/etc/nginx/sites-enabled/
 
+- name: nginx - remove default site
+  file: path=/etc/nginx/sites-enabled/default state=absent
+
 - name: nginx - restart
   service: name=nginx state=restarted

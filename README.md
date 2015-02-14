@@ -10,6 +10,7 @@ installation.
 # Quick quide
 
 ```
+apt-get install python-devel python-pip
 sudo pip install ansible --upgrade
 git clone https://github.com/bitmazk/ansible-digitalocean-influxdb-grafana.git
 cd ansible-digitalocean-influxdb-grafana
@@ -90,5 +91,5 @@ When a new version of Grafana is released, just change the
 ``GRAFANA_SOURCE_FILENAME`` in ``external_vars.yml`` and run:
 
 ```
-ansible-playvook -i hosts update-grafana.yml
+ansible-playbook -i hosts update-grafana.yml
 ```

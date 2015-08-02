@@ -17,7 +17,7 @@ cd ansible-digitalocean-influxdb-grafana
 cp hosts.sample hosts
 vim hosts
 cp vars/external_vars.yml.sample vars/external_vars.yml
-vim /vars/external_vars.yml
+vim vars/external_vars.yml
 ansible-playbook -i hosts site.yml
 ```
 

@@ -18,7 +18,7 @@ INFLUXDB_GRAFANA_PASSWORD: 'grafana'
 GRAFANA_SOURCE_FILENAME: 'grafana-1.8.1'
 
 # Port for grafana nginx virtual server
-GRAFANA_NGINX_PORT: 8080
+GRAFANA_NGINX_PORT: 80
 
 # Basic HTTP AUTH password for the grafana frontent (username is grafana)
 HTPASSWD_GRAFANA_PASSWORD: 'grafana'
